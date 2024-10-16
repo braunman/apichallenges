@@ -1,0 +1,21 @@
+{
+  "name": "apichallenges",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "allure": "allure generate --clean && allure open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^9.0.3",
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.5",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.5",
+    "axios": "^1.7.7"
+  }
+}
