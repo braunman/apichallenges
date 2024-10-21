@@ -353,15 +353,18 @@ test("35 Restore user progress @API", async ({ }) => {
     expect(bodyRestoreProgress).toHaveProperty("challengeStatus");
 });
 
+
 // PUT /challenger/guid CREATE
-test("36 Create new user progress @API", async ({ }) => {
+test.only("36 Create new user progress @API", async ({ }) => {
+    const uuid = '4e08a4b4-6bde-4845-b1a9-239b3a545de1';
     let { status, body } = await client.challenger.getProgress();
     expect(status).toEqual(200);
-    body.challengeStatus.PUT_NEW_RESTORED_CHALLENGER_PROGRESS_STATUS = true;
-    let { status: statusRestoreProgress, body: bodyRestoreProgress } = await client.challenger.restoreProgress(body);
-    expect(statusRestoreProgress).toEqual(200);
-    expect(bodyRestoreProgress).toHaveProperty("xChallenger");
-    expect(bodyRestoreProgress).toHaveProperty("xAuthToken");
+    body['xChallenger'] = uuid;
+    delete (body.xAuthToken);
+    const headers = { "X-CHALLENGER": uuid };
+    let { status: statusRestoreProgress, body: bodyRestoreProgress } = await client.challenger.restoreProgress(body, uuid, headers);
+    expect(statusRestoreProgress).toEqual(201);
+    expect(bodyRestoreProgress).toHaveProperty("xChallenger", uuid);
     expect(bodyRestoreProgress).toHaveProperty("secretNote");
     expect(bodyRestoreProgress).toHaveProperty("challengeStatus");
 });
@@ -562,4 +565,24 @@ test("59 Create maximum number of todos @API", async ({ }) => {
     expect(status).toEqual(400);
     expect(task).toHaveProperty('errorMessages', [`ERROR: Cannot add instance, maximum limit of ${maxNumberOfTasks} reached`]);
 
+});
+
+
+
+// experiments 
+
+
+// PUT /challenger/guid CREATE
+test.only("36 Create new user progress @API", async ({ }) => {
+    const uuid = '4e08a4b4-6bde-4845-b1a9-239b3a545de1';
+    let { status, body } = await client.challenger.getProgress();
+    expect(status).toEqual(200);
+    body['xChallenger'] = uuid;
+    delete (body.xAuthToken);
+    const headers = { "X-CHALLENGER": uuid };
+    let { status: statusRestoreProgress, body: bodyRestoreProgress } = await client.challenger.restoreProgress(body, uuid, headers);
+    expect(statusRestoreProgress).toEqual(201);
+    expect(bodyRestoreProgress).toHaveProperty("xChallenger", uuid);
+    expect(bodyRestoreProgress).toHaveProperty("secretNote");
+    expect(bodyRestoreProgress).toHaveProperty("challengeStatus");
 });

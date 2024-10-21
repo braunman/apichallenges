@@ -1,5 +1,6 @@
-import { BaseService } from "./base.service";
 import { step } from "allure-js-commons";
+
+import { BaseService } from "./base.service";
 
 export class ChallengerService extends BaseService {
     constructor(client) {
@@ -22,10 +23,10 @@ export class ChallengerService extends BaseService {
         });
     }
 
-    async restoreProgress(progress, guid = null) {
+    async restoreProgress(progress, guid = null, requestHeaders = {}) {
         const _guid = guid ? guid : this.client.headers['X-CHALLENGER'];
-        return step("Restore challenger progress", async () => {
-            const { status, body } = await this.client.put(`${this.endpoint}/${_guid}`, { data: progress });
+        return await step("Restore challenger progress", async () => {
+            const { status, body } = await this.client.put(`${this.endpoint}/${_guid}`, { data: progress, headers: requestHeaders });
             return { status, body };
         });
     }
