@@ -356,7 +356,7 @@ test("35 Restore user progress @API", async ({ }) => {
 
 
 // PUT /challenger/guid CREATE
-test.only("36  v2 Create new user progress @API", async ({ }) => {
+test("36  v2 Create new user progress @API", async ({ }) => {
     const uuid = crypto.randomUUID();
     let { status, body } = await client.challenger.getProgress();
     expect(status).toEqual(200);
