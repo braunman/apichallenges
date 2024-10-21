@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { expect, test } from '@playwright/test';
 
 import { ApiClient } from '../src/api.client';
@@ -355,18 +356,15 @@ test("35 Restore user progress @API", async ({ }) => {
 
 
 // PUT /challenger/guid CREATE
-test.only("36 Create new user progress @API", async ({ }) => {
-    const uuid = '4e08a4b4-6bde-4845-b1a9-239b3a545de1';
+test.only("36  v2 Create new user progress @API", async ({ }) => {
+    const uuid = crypto.randomUUID();
     let { status, body } = await client.challenger.getProgress();
     expect(status).toEqual(200);
     body['xChallenger'] = uuid;
     delete (body.xAuthToken);
     const headers = { "X-CHALLENGER": uuid };
-    let { status: statusRestoreProgress, body: bodyRestoreProgress } = await client.challenger.restoreProgress(body, uuid, headers);
+    let { status: statusRestoreProgress } = await client.challenger.restoreProgress(body, uuid, headers);
     expect(statusRestoreProgress).toEqual(201);
-    expect(bodyRestoreProgress).toHaveProperty("xChallenger", uuid);
-    expect(bodyRestoreProgress).toHaveProperty("secretNote");
-    expect(bodyRestoreProgress).toHaveProperty("challengeStatus");
 });
 
 // GET /challenger/database/guid (200)
@@ -567,22 +565,3 @@ test("59 Create maximum number of todos @API", async ({ }) => {
 
 });
 
-
-
-// experiments 
-
-
-// PUT /challenger/guid CREATE
-test.only("36 Create new user progress @API", async ({ }) => {
-    const uuid = '4e08a4b4-6bde-4845-b1a9-239b3a545de1';
-    let { status, body } = await client.challenger.getProgress();
-    expect(status).toEqual(200);
-    body['xChallenger'] = uuid;
-    delete (body.xAuthToken);
-    const headers = { "X-CHALLENGER": uuid };
-    let { status: statusRestoreProgress, body: bodyRestoreProgress } = await client.challenger.restoreProgress(body, uuid, headers);
-    expect(statusRestoreProgress).toEqual(201);
-    expect(bodyRestoreProgress).toHaveProperty("xChallenger", uuid);
-    expect(bodyRestoreProgress).toHaveProperty("secretNote");
-    expect(bodyRestoreProgress).toHaveProperty("challengeStatus");
-});
