@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
 import { ApiClient } from '../src/api.client';
-import { TaskBuilder, toJSON, toXML, convertToBase64 } from '../src/helpers/index';
+import { convertToBase64, TaskBuilder, toJSON, toXML } from '../src/helpers/index';
 
 let client;
 let apiContext;
@@ -13,7 +14,6 @@ test.beforeAll(async ({ playwright }) => {
     await client.toDos.deleteAllTasks();
 
 });
-
 
 
 test.afterAll(async ({ }) => {
