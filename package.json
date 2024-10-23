@@ -1,0 +1,23 @@
+{
+    "name": "apichallenges",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx playwright test",
+        "api": "npx playwright test --grep API",
+        "allureGenerate": "allure generate --clean",
+        "allureOpen": "allure open",
+        "allure": "allure generate --clean && allure open"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@faker-js/faker": "^9.0.3",
+        "@playwright/test": "^1.48.1",
+        "@types/node": "^22.7.5",
+        "allure-playwright": "^3.0.5",
+        "fast-xml-parser": "^4.5.0"
+    }
+}
