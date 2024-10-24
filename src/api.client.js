@@ -1,4 +1,7 @@
 import { ChallengerService, PlaywrightApiClient, ChallengesService, ToDosService, HeartbeatService, SecretService } from './services/index';
+import { writeJson, isFileRecentlyCreated, readJson } from './helpers/index';
+
+const tokenFileName = 'token.json'
 
 export class ApiClient {
 
@@ -20,14 +23,28 @@ export class ApiClient {
     };
 
     static async loginAs(client) {
-        const apiClient = this.unauthorized(client);
-        const token = await apiClient.challenger.getToken();
-        console.log('');
-        console.log('>>>');
-        console.log(`https://apichallenges.herokuapp.com/gui/challenges/${token}`)
-        console.log('>>>');
-        console.log('');
+        let token;
+        if (await isFileRecentlyCreated(tokenFileName)) {
+            const data = await readJson(tokenFileName);
+            token = data.token;
+        } else {
+            const apiClient = this.unauthorized(client);
+            token = await apiClient.challenger.getToken();
+        }
         return new ApiClient(client, { headers: { 'X-CHALLENGER': token } });
+    }
+
+    async setTokenToStorage() {
+        if (!(await isFileRecentlyCreated(tokenFileName))) {
+            const token = this.client.headers['X-CHALLENGER'];
+            await writeJson(tokenFileName, { token })
+
+            console.log('');
+            console.log('>>>');
+            console.log(`https://apichallenges.herokuapp.com/gui/challenges/${token}`)
+            console.log('>>>');
+            console.log('');
+        }
     }
 
     static unauthorized(client) {
