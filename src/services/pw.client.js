@@ -1,4 +1,4 @@
-import { addAttachment, step } from "allure-js-commons";
+import { step } from "allure-js-commons";
 
 export class PlaywrightApiClient {
     constructor(client, options) {
@@ -61,9 +61,7 @@ export class PlaywrightApiClient {
         try {
             body = await response.json();
             bodyAsString = JSON.stringify(body, null, 2)
-
-
-        } catch (error) {
+        } catch {
             body = await response.text();
             bodyAsString = body;
         }
@@ -81,7 +79,7 @@ export class PlaywrightApiClient {
         const options = {};
         for (const key in requestData) {
             if (possibleOptions.includes(key)) {
-                if (!!requestData[key]) {
+                if (requestData[key]) {
                     options[key] = requestData[key];
                 }
             }

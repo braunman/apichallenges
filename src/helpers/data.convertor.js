@@ -1,6 +1,4 @@
-import { XMLParser, XMLBuilder, XMLValidator } from "fast-xml-parser";
-
-
+import { XMLBuilder, XMLParser } from "fast-xml-parser";
 
 export const toXML = (dataInJson) => {
     const builder = new XMLBuilder();

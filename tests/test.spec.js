@@ -10,6 +10,7 @@ let apiContext;
 test.beforeAll(async ({ playwright }) => {
     apiContext = await playwright.request.newContext();
     client = await ApiClient.loginAs(apiContext);
+    let a;
 
     //  clear all tasks before start tests
     await client.toDos.deleteAllTasks();
