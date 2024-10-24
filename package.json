@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "npx playwright test",
-        "api": "npx playwright test --grep API",
+        "api": "npx playwright test --grep API ; npx playwright test --grep ALL_CREATE ;npx playwright test --grep ALL_DELETE  ",
         "allureGenerate": "allure generate --clean",
         "allureOpen": "allure open",
         "allure": "allure generate --clean && allure open"

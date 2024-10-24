@@ -23,8 +23,9 @@ export class ApiClient {
     };
 
     static async loginAs(client) {
+        const isGoodFile = await isFileRecentlyCreated(tokenFileName)
         let token;
-        if (await isFileRecentlyCreated(tokenFileName)) {
+        if (isGoodFile) {
             const data = await readJson(tokenFileName);
             token = data.token;
         } else {
@@ -35,10 +36,10 @@ export class ApiClient {
     }
 
     async setTokenToStorage() {
-        if (!(await isFileRecentlyCreated(tokenFileName))) {
+        const isGoodFile = await isFileRecentlyCreated(tokenFileName)
+        if (!isGoodFile) {
             const token = this.client.headers['X-CHALLENGER'];
             await writeJson(tokenFileName, { token })
-
             console.log('');
             console.log('>>>');
             console.log(`https://apichallenges.herokuapp.com/gui/challenges/${token}`)

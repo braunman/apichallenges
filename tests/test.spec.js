@@ -526,7 +526,7 @@ test("57 Create note using Bearer token @API", async () => {
 });
 
 // DELETE /todos/{id} (200) all
-test("58 Delete all todos", async () => {
+test("58 Delete all todos @ALL_DELETE", async () => {
     await client.toDos.deleteAllTasks();
     const { status, tasks } = await client.toDos.getAllTasks();
     expect(status).toEqual(200);
@@ -534,7 +534,7 @@ test("58 Delete all todos", async () => {
 });
 
 // POST /todos (201) all
-test("59 Create maximum number of todos", async () => {
+test("59 Create maximum number of todos @ALL_CREATE", async () => {
     await client.toDos.deleteAllTasks();
     const maxNumberOfTasks = 20
     const createTaskPromises = [];
